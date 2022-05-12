@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+    <head>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
+        <style>
+            h1 {
+                font-family: Pacifico, sans-serif;
+                font-size: 4em;
+                color: #3eb5f1;
+                margin: 0;
+            }
+
+            h2 {
+                font-weight: 300;
+                font-family: sans-serif;
+            }
+
+            .centered {
+                height: 200px;
+                text-align: center;
+            }
+
+            #ferris {
+                width: 100px;
+            }
+        </style>
+        <script src="index.js"></script>
+    </head>
+    <body>
+        <div class="centered">
+            <h1>200 Success</h1>
+            <h2>Hello World! Welcome to your Workers Site!</h2>
+            <img id="ferris" alt="a happy crab is wearing a cowboy hat and holding a lasso. 200 success." src="./img/200-wrangler-ferris.gif">
+            
+        </div>
+        <div class="remote_content">
+            <h2>Projects & Tasks</h2>
+            <div>Request projects and their tasks while calling <b>upper</b> on the project name</div>
+            <div>/rest/projects?select=id,name:$upper(name),tasks(name)&id=gt.2</div>
+            <ul id="remote_content_1"></ul>
+        </div>
+
+        <div class="remote_content">
+            <h2>Custom Route</h2>
+            <div>Request a route handled by custom function that makes two requests to the underlying database and aggregates the results in a single json response</div>
+            <ul id="remote_content_2"></ul>
+        </div>
+        
+    </body>
+</html>

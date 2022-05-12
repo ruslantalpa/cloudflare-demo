@@ -1,0 +1,45 @@
+version: '3'
+
+volumes:
+     sqlite-db:
+services:
+  sqlite-db-init:
+    container_name: sqlite-db-init
+    image: sqlite-db-init
+    build:
+      context: .
+      dockerfile: ./Dockerfile_sqlite
+    entrypoint: bash -c "sqlite3 /root/db/appdb.db < /schema.sql"
+    volumes:
+      - sqlite-db:/root/db
+      - "./db/schema.sql:/schema.sql"
+  
+  
+  subzero:
+    container_name: subzero
+    image: subzerocloud/subzero
+    # image: subzero
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite-db:/root/db
+    depends_on:
+      - "sqlite-db-init"
+    environment:
+      # global configuration
+      - SUBZERO_ADDRESS=0.0.0.0
+      - SUBZERO_LOG_LEVEL=debug
+      - SUBZERO_DB_URI=/root/db/appdb.db
+      - SUBZERO_DB_POOL=10
+      - SUBZERO_DB_TYPE=sqlite
+      - SUBZERO_URL_PREFIX="/rest"
+      - SUBZERO_DB_ANON_ROLE=anonymous
+      # - SUBZERO_DB_SCHEMAS="[public]"
+      # - SUBZERO_DB_SCHEMA_STRUCTURE="{sql_file=structure_query.sql}"
+      # - SUBZERO_DB_MAX_ROWS=100,
+      # - SUBZERO_DB_USE_LEGACY_GUCS=false,
+      # - SUBZERO_DB_TX_ROLLBACK=false,
+      # - SUBZERO_DB_PRE_REQUEST="schema_name.function_name",
+      # - SUBZERO_JWT_SECRET="reallyreallyreallyreallyverysafe",
+      # - SUBZERO_ROLE_CLAIM_KEY=".role",
+  
